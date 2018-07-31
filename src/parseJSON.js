@@ -5,6 +5,7 @@
 var parseJSON = function(json) {
   // your code goes here
   var eval = function(value) {
+    console.log(value);
     value = value.trim();
     if (value === 'true') {
       value = true;
@@ -13,16 +14,15 @@ var parseJSON = function(json) {
     } else if (value === 'null') {
       value = null;
     } else if (value.search(/\d/g) >= 0 && !isNaN(Number(value))) {
-      value = Number(value)
+      value = Number(value);
     } else if (typeof value === 'string') {
       value = value.replace(/['"]+/g, '');
-      console.log("value:", value);
     }
     return value;
-  }
+  };
   
   
-  
+  //turn into array function
   if (json[0] === '[') {
     var result = [];
     if(json.length > 2) {
@@ -32,22 +32,25 @@ var parseJSON = function(json) {
       });
     }
     return result;
-  } else if (json[0] === '{') {
+  }
+  
+  //turn into object function
+  else if (json[0] === '{') {
     var result = {};
     if(json.length > 2) {
-      var pairs = json.slice(1, -1).split(/,|:/g);
+      var pairs = json.slice(1, -1).split(/:|,(?=[^"]"[^"]*")/g);
+      console.log('pairs', pairs)
       for (var i = 0; i < pairs.length; i+=2) {
         result[eval(pairs[i])] = eval(pairs[i+1]);
       }
     }
-    
     return result;
   }
 };
     
-    // object - {}, { members }
-    // members - pair
-    // pair - string: value
-    // array - [], [ elements ]
-    // elements - value
-    // value - string, number, object, array, bool, null
+// object - {}, { members }
+// members - pair
+// pair - string: value
+// array - [], [ elements ]
+// elements - value
+// value - string, number, object, array, bool, null
