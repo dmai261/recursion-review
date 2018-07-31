@@ -38,7 +38,7 @@ unstringifiableValues = [
 ];
 
 parseableStrings = [
-  // basic stuff
+  //basic stuff
   '[]',
   '{"foo": ""}',
   '{}',
